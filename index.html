@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EMI Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input {
+      padding: 5px;
+      margin: 5px;
+      width: 150px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+    }
+    h2 {
+      color: #333;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h2>EMI Calculator</h2>
+
+  <label>Loan Amount (₹): </label>
+  <input type="number" id="loan" placeholder="Enter loan amount"><br>
+
+  <label>Annual Interest Rate (%): </label>
+  <input type="number" id="rate" placeholder="Enter interest rate"><br>
+
+  <label>Tenure (Years): </label>
+  <input type="number" id="tenure" placeholder="Enter tenure in years"><br>
+
+  <button onclick="calculateEMI()">Calculate EMI</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculateEMI() {
+      // Get values from input
+      let P = parseFloat(document.getElementById('loan').value);
+      let annualRate = parseFloat(document.getElementById('rate').value);
+      let years = parseFloat(document.getElementById('tenure').value);
+
+      if(P <= 0 || annualRate <= 0 || years <= 0) {
+        document.getElementById('result').innerText = "Please enter valid numbers!";
+        return;
+      }
+
+      // Convert annual rate to monthly and tenure to months
+      let r = annualRate / 12 / 100;
+      let n = years * 12;
+
+      // EMI formula
+      let emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+
+      document.getElementById('result').innerText = "Your Monthly EMI = ₹" + emi.toFixed(2);
+    }
+  </script>
+</body>
+</html>
